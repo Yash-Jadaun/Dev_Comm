@@ -1,0 +1,63 @@
+/* Main App styling */
+.App {
+  display: flex;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Sidebar styling to integrate well with the main layout */
+.sidebar {
+  background-color: #333;
+  color: white;
+  width: 250px;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* Content styling for main content area */
+.main-content {
+  flex: 1;
+  margin-left: 250px; /* Offset to make space for the sidebar */
+  padding: 40px;
+  background-color: #f4f6f8;
+}
+
+/* Header section */
+.App-header {
+  background-color: #282c34;
+  color: white;
+  padding: 1em;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+/* Links styling */
+.App-link {
+  color: #61dafb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.App-link:hover {
+  color: #21a1f1;
+}
+
+/* General button styling */
+button {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #21a1f1;
+}
