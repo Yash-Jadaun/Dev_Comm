@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Search</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <input type="text" id="nameInput" placeholder="Name">
+    <input type="email" id="emailInput" placeholder="Email">
+    <input type="text" id="skillsInput" placeholder="Skills (comma separated)">
+    <input type="number" id="experienceInput" placeholder="Experience (in years)">
+    <button id="signupButton">Sign Up</button>
+
+    <h1>Search Developers</h1>
+    <input type="text" id="searchInput" placeholder="Search by skill...">
+    <button id="searchButton">Search</button>
+    <div id="results"></div>
+
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button id="sendButton">Send</button>
+    <div id="messages"></div>
+
+    <script>
+        const socket = io('http://localhost:4000');
+
+        // Sign Up functionality
+        document.getElementById('signupButton').addEventListener('click', async () => {
+            const name = document.getElementById('nameInput').value;
+            const email = document.getElementById('emailInput').value;
+            const skills = document.getElementById('skillsInput').value.split(',').map(skill => skill.trim());
+            const experience = parseInt(document.getElementById('experienceInput').value);
+
+            const response = await fetch('http://localhost:4000/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, skills, experience })
+            });
+
+            if (response.ok) {
+                alert('User created successfully!');
+                document.getElementById('nameInput').value = '';
+                document.getElementById('emailInput').value = '';
+                document.getElementById('skillsInput').value = '';
+                document.getElementById('experienceInput').value = '';
+            } else {
+                alert('Failed to create user.');
+            }
+        });
+
+        // Sending message to the server
+        document.getElementById('sendButton').addEventListener('click', () => {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+            socket.emit('sendMessage', message);
+            messageInput.value = '';
+        });
+
+        // Receiving messages from the server
+        socket.on('receiveMessage', (msg) => {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += `<p>${msg}</p>`;
+        });
+
+        // Confirm connection
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        // Search developers
+        document.getElementById('searchButton').addEventListener('click', async () => {
+            const skill = document.getElementById('searchInput').value;
+            const response = await fetch(`http://localhost:4000/developers?skill=${skill}`);
+            const developers = await response.json();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Clear previous results
+
+            if (developers.length > 0) {
+                developers.forEach(dev => {
+                    resultsDiv.innerHTML += `<p>Name: ${dev.name}, Skills: ${dev.skills.join(', ')}, Experience: ${dev.experience} years</p>`;
+                });
+            } else {
+                resultsDiv.innerHTML = '<p>No developers found.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
+

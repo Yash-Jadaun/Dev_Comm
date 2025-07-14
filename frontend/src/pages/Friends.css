@@ -1,0 +1,82 @@
+/* src/pages/Friends.css */
+
+.friends {
+    display: flex;
+    position: relative;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+.friends-sidebar {
+    width: 250px;
+    padding: 20px;
+    background-color: white;
+    border-right: 1px solid #ccc;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.friend-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.friend-item:hover {
+    background-color: #f0f0f0;
+}
+
+.friend-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-popup {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4267B2;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.close-chat-button {
+    background: none;
+    color: white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.chat-content {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 5px;
+    border-top: 1px solid #ccc;
+}
